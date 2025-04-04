@@ -1,7 +1,12 @@
 package org.example;
 
+import org.example.Service.CarrinhoService;
+import org.example.Service.FreteService;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        CarrinhoService carrinhoService = new CarrinhoService();
+
+        carrinhoService.montarCarrinho();
     }
 }
