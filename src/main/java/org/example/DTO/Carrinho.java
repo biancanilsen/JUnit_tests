@@ -10,7 +10,7 @@ public class Carrinho {
 
     private Integer id;
     private BigDecimal valorTotal;
-    private List<Produto> produto;
+    private List<Produto> produtos;
     private Frete frete;
     private Desconto desconto;
     private List<Validacao> valicadao;
