@@ -52,4 +52,11 @@ public class Estado {
         estados.add(new Estado(27, "TO", "Brasil", 59));
         return estados;
     }
+
+    public static Estado getEstadoBySigla(String sigla) {
+        return getAllEstados().stream()
+                .filter(e -> e.getSigla().equals(sigla))
+                .findFirst()
+                .orElse(null);
+    }
 }

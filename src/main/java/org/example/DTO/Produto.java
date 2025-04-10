@@ -19,4 +19,14 @@ public class Produto {
         this.valorUnitario = valorUnitario;
         this.estadosDisponiveis = estadosDisponiveis;
     }
+
+    public void aumentarQuantidade() {
+        this.quantidade++;
+    }
+
+    public void diminuirQuantidade() {
+        if (this.quantidade > 0) {
+            this.quantidade--;
+        }
+    }
 }
