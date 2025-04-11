@@ -15,7 +15,6 @@ public class CarrinhoService {
     DescontoService descontoService = new DescontoService();
     ProdutoService produtoService = new ProdutoService();
 
-    //semelhante ao adicionar produto
     public void montarCarrinho() {
         Carrinho carrinho = new Carrinho();
         carrinho.setProdutos(new ArrayList<>());
@@ -26,7 +25,6 @@ public class CarrinhoService {
         System.out.print("Digite a sigla do estado a ser enviado: ");
         String siglaEstado = scanner.nextLine();
 
-        // to do rever essa lógica
         while(adicionarMaisProdutos == 1) {
             System.out.print("Digite o id do produto desejado para adicionar no carrinho: ");
             Integer idProdutoNovo = scanner.nextInt();
@@ -47,29 +45,6 @@ public class CarrinhoService {
 
             adicionarMaisProdutos = adicionar;
         }
-
-
-
-//        Integer valorFrete = freteService.calcularFrete();
-//        System.out.println("Frete: R$" + valorFrete);
-
-//
-
-//        if(validacao != null) {
-//            return;
-//        }
-
-
-
-        // Calculando frete
-
-
-//        BigDecimal valorProduto = BigDecimal.valueOf(50 + valorFrete);
-
-        // Aplicando desconto fixo de R$ 10
-//        Desconto desconto = descontoService.aplicarDescontoPorCupom(valorProduto);
-//        System.out.println("Valor com desconto: R$" + desconto.getValor());
-
     }
 
     public void adicionarProduto(Carrinho carrinho, Integer idProduto) {
