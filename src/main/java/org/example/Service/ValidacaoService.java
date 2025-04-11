@@ -9,59 +9,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValidacaoService {
+    ProdutoService produtoService = new ProdutoService();
 
     public Validacao validarProduto(Integer idProduto, String siglaEstado) {
-        // por enquanto está com mock mas depois vai usar o que vir por parâmetro
-        List<Estado> estados = new ArrayList<>();
-        estados.add(new Estado(1, "SC", "Brasil", 34));
-        estados.add(new Estado(27, "TO", "Brasil", 59));
-
-        // mock
-        List<Produto> produtosAux = new ArrayList<>();
-        produtosAux.add(new Produto(1, "Produto 1", 2, 4, estados));
-
         boolean produtoExiste = validarSeProdutoExiste(idProduto);
         if(!produtoExiste) {
             return new Validacao(1, ERegra.PRODUTO_INEXISTENTE, "O produto selecionado não existe");
         }
 
-        boolean temDisponibilidadeEstado = validarDisponibilidadeEstado(siglaEstado);
+        boolean temDisponibilidadeEstado = validarDisponibilidadeEstado(siglaEstado, idProduto);
         if(!temDisponibilidadeEstado) {
-            return new Validacao(2, ERegra.INDISPONIBILIDADE_ESTADO, "O produto selecionado não está disponível no estado selecionado");
+            String descricao = "O produto selecionado não está disponível no estado selecionado \n";
+            System.out.print(descricao);
+            return new Validacao(2, ERegra.INDISPONIBILIDADE_ESTADO, descricao);
         }
 
         return null;
     }
 
     public boolean validarSeProdutoExiste(Integer idProduto) {
-        // por enquanto está com mock mas depois vai usar o que vir por parâmetro
-        // exemplo: ter um método que recupera todos os produtos na classe de produto
-        List<Estado> estados = new ArrayList<>();
-        estados.add(new Estado(1, "SC", "Brasil", 34));
-        estados.add(new Estado(27, "TO", "Brasil", 59));
+        List<Produto> produtos = produtoService.buscarTodosProdutos();
 
-        // mock
-        List<Produto> produtosAux = new ArrayList<>();
-        produtosAux.add(new Produto(1, "Produto 1", 2, 4, estados));
-
-        return produtosAux.stream()
+        return produtos.stream()
                 .anyMatch(produto -> produto.getId().equals(idProduto));
     }
 
-    public boolean validarDisponibilidadeEstado(String siglaEstado) {
-        // por enquanto está com mock mas depois vai usar o que vir por parâmetro
-        // exemplo: ter um método que recupera todos os produtos na classe de produto
-        List<Estado> estados = new ArrayList<>();
-        estados.add(new Estado(1, "SC", "Brasil", 34));
-        estados.add(new Estado(27, "TO", "Brasil", 59));
+    public boolean validarDisponibilidadeEstado(String siglaEstado, Integer idProduto) {
+        List<Produto> produtos = produtoService.buscarTodosProdutos();
 
-        // mock
-        List<Produto> produtosAux = new ArrayList<>();
-        produtosAux.add(new Produto(1, "Produto 1", 2, 4, estados));
-
-        return produtosAux.stream()
+        return produtos.stream()
+                .filter(produto -> produto.getId().equals(idProduto))
                 .anyMatch(produto -> produto.getEstadosDisponiveis().stream()
                         .anyMatch(estado -> estado.getSigla().equals(siglaEstado)));
+
     }
 
 }

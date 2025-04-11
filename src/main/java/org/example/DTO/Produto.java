@@ -20,6 +20,7 @@ public class Produto {
         this.estadosDisponiveis = estadosDisponiveis;
     }
 
+    // isso está errado
     public void aumentarQuantidade() {
         this.quantidade++;
     }

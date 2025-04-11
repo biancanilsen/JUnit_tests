@@ -5,6 +5,9 @@ import org.example.DTO.Produto;
 import org.example.DTO.Validacao;
 import org.example.DTO.Desconto;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class CarrinhoService {
     FreteService freteService = new FreteService();
@@ -12,59 +15,77 @@ public class CarrinhoService {
     DescontoService descontoService = new DescontoService();
     ProdutoService produtoService = new ProdutoService();
 
-//    public void initCarrinho(List<Produto> produtos) {
-//        Carrinho carrinho = new Carrinho();
-//        double valorTotal = 0.0;
-//
-//        for (Produto p : produtos) {
-//            valorTotal += p.getValorUnitario() * p.getQuantidade();
-//        }
-//
-//        carrinho.setId(gerar num aleatorio);
-//        carrinho.setValorTotal(valorTotal);
-//        carrinho.setProdutos(produtos);
-//        carrinho.setFrete(null);
-//        carrinho.setDesconto(null);
-//        carrinho.setValicadao(null);
-//    }
-
     //semelhante ao adicionar produto
     public void montarCarrinho() {
+        Carrinho carrinho = new Carrinho();
+        carrinho.setProdutos(new ArrayList<>());
+        Integer adicionarMaisProdutos = 1;
+        Scanner scanner = new Scanner(System.in);
+
         produtoService.listarProdutosDisponiveis();
+        System.out.print("Digite a sigla do estado a ser enviado: ");
+        String siglaEstado = scanner.nextLine();
 
-        // antes de adicionar o produto na lista de produtos vamos validar
-        // por enquanto vou passar valor de mock mas depois vai mudar
-        Integer idProduto = 1;
+        // to do rever essa lógica
+        while(adicionarMaisProdutos == 1) {
+            System.out.print("Digite o id do produto desejado para adicionar no carrinho: ");
+            Integer idProdutoNovo = scanner.nextInt();
 
-        String siglaEstado = "SC";
-        Validacao validacao = validacaoService.validarProduto(idProduto, siglaEstado);
+            Validacao validacao = validacaoService.validarProduto(idProdutoNovo, siglaEstado);
 
-        if(validacao != null) {
-            // aqui vai apresentar a lista de produtos disponíves
+            if(validacao != null) {
+                return;
+            }
+
+            adicionarProduto(carrinho, idProdutoNovo);
+
+            System.out.print("--------------------------------------------------------------");
+            System.out.print("Adicionar mais produtos?");
+            System.out.print("\n 0 -  Não");
+            System.out.print("\n 1 -  Sim \n");
+            Integer adicionar = scanner.nextInt();
+
+            adicionarMaisProdutos = adicionar;
         }
 
-        // Calculando frete
-        Integer valorFrete = freteService.calcularFrete();
-        System.out.println("Frete: R$" + valorFrete);
 
-        BigDecimal valorProduto = BigDecimal.valueOf(50 + valorFrete);
+
+//        Integer valorFrete = freteService.calcularFrete();
+//        System.out.println("Frete: R$" + valorFrete);
+
+//
+
+//        if(validacao != null) {
+//            return;
+//        }
+
+
+
+        // Calculando frete
+
+
+//        BigDecimal valorProduto = BigDecimal.valueOf(50 + valorFrete);
 
         // Aplicando desconto fixo de R$ 10
-        Desconto desconto = descontoService.calcularDescontoFixo(valorProduto, BigDecimal.TEN);
-        System.out.println("Valor com desconto: R$" + desconto.getValor());
+//        Desconto desconto = descontoService.calcularDescontoFixo(valorProduto, BigDecimal.TEN);
+//        System.out.println("Valor com desconto: R$" + desconto.getValor());
 
     }
 
-    public void adicionarProduto(Carrinho carrinho, Produto produtoNovo) {
+    public void adicionarProduto(Carrinho carrinho, Integer idProduto) {
         for (Produto p : carrinho.getProdutos()) {
-            if (p.getId().equals(produtoNovo.getId())) {
+            if (p.getId().equals(idProduto)) {
                 p.aumentarQuantidade();
-                System.out.println(produtoNovo.getNome() + " foi adicionado ao carrinho.");
+                System.out.println(idProduto + " foi adicionado ao carrinho.");
+                System.out.println("Produtos do carrinho" + carrinho.getProdutos());
                 return;
             }
         }
+        Produto produtoNovo = produtoService.getProdutoById(idProduto);
         carrinho.getProdutos().add(produtoNovo);
-        System.out.println(produtoNovo.getNome() + " foi adicionado ao carrinho.");
+        System.out.println("Produto" + produtoNovo.getNome() + " foi adicionado ao carrinho.");
+
+        System.out.println("Produtos do carrinho" + carrinho.getProdutos());
     }
 
     public void exibirCarrinho(Carrinho carrinho) {
