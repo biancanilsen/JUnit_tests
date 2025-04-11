@@ -67,7 +67,7 @@ public class CarrinhoService {
 //        BigDecimal valorProduto = BigDecimal.valueOf(50 + valorFrete);
 
         // Aplicando desconto fixo de R$ 10
-//        Desconto desconto = descontoService.calcularDescontoFixo(valorProduto, BigDecimal.TEN);
+//        Desconto desconto = descontoService.aplicarDescontoPorCupom(valorProduto);
 //        System.out.println("Valor com desconto: R$" + desconto.getValor());
 
     }

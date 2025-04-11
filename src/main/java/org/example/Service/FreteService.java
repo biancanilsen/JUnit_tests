@@ -10,7 +10,6 @@ public class FreteService {
 
         System.out.print("Informe o estado a ser enviado: ");
         String estadoSelecionado= scanner.nextLine();
-        scanner.close();
 
         List<Estado> estados = Estado.getAllEstados();
         double valorFrete = estados.stream()
