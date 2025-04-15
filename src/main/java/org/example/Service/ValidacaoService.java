@@ -20,7 +20,6 @@ public class ValidacaoService {
         boolean temDisponibilidadeEstado = validarDisponibilidadeEstado(siglaEstado, idProduto);
         if(!temDisponibilidadeEstado) {
             String descricao = "O produto selecionado não está disponível no estado selecionado \n";
-            System.out.print(descricao);
             return new Validacao(2, ERegra.INDISPONIBILIDADE_ESTADO, descricao);
         }
 
