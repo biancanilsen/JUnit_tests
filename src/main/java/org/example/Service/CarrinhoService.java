@@ -1,14 +1,11 @@
 package org.example.Service;
 
 import org.example.DTO.Carrinho;
-import org.example.DTO.Estado;
 import org.example.DTO.Frete;
 import org.example.DTO.Produto;
 import org.example.DTO.Validacao;
-import org.example.DTO.Desconto;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import static org.example.DTO.Estado.getEstadoBySigla;
@@ -98,6 +95,7 @@ public class CarrinhoService {
         System.out.print("Valor total do carrinho: " + carrinho.getValorTotal() + "\n");
     }
 
+    // rever se vai ser necessário essa função
     public void removerProduto(Carrinho carrinho, Produto produtoApagar) {
         for (int i = 0; i < carrinho.getProdutos().size(); i++) {
             Produto p = carrinho.getProdutos().get(i);
