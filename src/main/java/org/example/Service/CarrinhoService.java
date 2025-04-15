@@ -22,7 +22,7 @@ public class CarrinhoService {
     public void montarCarrinho() {
         Carrinho carrinho = new Carrinho();
         carrinho.setProdutos(new ArrayList<>());
-        Integer adicionarMaisProdutos = 1;
+        int adicionarMaisProdutos = 1;
         Scanner scanner = new Scanner(System.in);
 
         produtoService.listarProdutosDisponiveis();
@@ -40,60 +40,62 @@ public class CarrinhoService {
             } else {
                 Integer valorFrete = freteService.calcularFrete(siglaEstado);
 
-                BigDecimal valorAtual = carrinho.getFrete() != null
+                BigDecimal valorFreteAtual = carrinho.getFrete() != null
                         ? carrinho.getFrete().getValor()
                         : BigDecimal.ZERO;
 
-                BigDecimal novoValorFrete = valorAtual.add(BigDecimal.valueOf(valorFrete));
+                BigDecimal valorTotalAtual = carrinho.getValorTotal() != null
+                        ? carrinho.getValorTotal()
+                        : BigDecimal.ZERO;
+
+                BigDecimal novoValorFrete = valorFreteAtual.add(BigDecimal.valueOf(valorFrete));
+                Produto produtoNovo = produtoService.getProdutoById(idProdutoNovo);
+                BigDecimal novoValorTotal = valorTotalAtual.add(BigDecimal.valueOf(produtoNovo.getValorUnitario()));
 
                 carrinho.setFrete(new Frete(novoValorFrete, getEstadoBySigla(siglaEstado)));
+                carrinho.setValorTotal(novoValorTotal);
 
                 adicionarProduto(carrinho, idProdutoNovo);
 
-                System.out.print("--------------------------------------------------------------");
+                System.out.print("----------------------------");
                 System.out.print("Adicionar mais produtos?");
+                System.out.print("----------------------------");
                 System.out.print("\n 0 -  Não");
                 System.out.print("\n 1 -  Sim \n");
-                Integer adicionar = scanner.nextInt();
+                int adicionar = scanner.nextInt();
 
                 adicionarMaisProdutos = adicionar;
             }
 
         }
+
+       exibirCarrinho(carrinho);
+
     }
 
     public void adicionarProduto(Carrinho carrinho, Integer idProduto) {
         for (Produto p : carrinho.getProdutos()) {
             if (p.getId().equals(idProduto)) {
                 p.aumentarQuantidade();
-                System.out.println(idProduto + " foi adicionado ao carrinho.");
-                System.out.println("Produtos do carrinho" + carrinho.getProdutos());
-                System.out.println("Carrinho" + carrinho);
                 return;
             }
         }
         Produto produtoNovo = produtoService.getProdutoById(idProduto);
         carrinho.getProdutos().add(produtoNovo);
-        System.out.println("Produto" + produtoNovo.getNome() + " foi adicionado ao carrinho.");
-
-        System.out.println("Produtos do carrinho" + carrinho.getProdutos());
-        System.out.println("Carrinho" + carrinho);
+        System.out.println("Produto " + produtoNovo.getNome() + " foi adicionado ao carrinho.");
     }
 
     public void exibirCarrinho(Carrinho carrinho) {
-        if (carrinho.getProdutos().isEmpty()) {
-            System.out.println("O carrinho está vazio.");
-            return;
-        }
+        System.out.print("Itens do carrinho:\n");
 
-        double total = 0;
-        System.out.println("Produtos no carrinho:");
-        for (Produto p : carrinho.getProdutos()) {
-            double subtotal = p.getValorUnitario() * p.getQuantidade();
-            System.out.println(p.getNome() + " - R$" + p.getValorUnitario() + " x " + p.getQuantidade() + " = R$" + subtotal);
-            total += subtotal;
+        for (Produto produto : carrinho.getProdutos()) {
+            System.out.println("ID: " + produto.getId());
+            System.out.println("Nome: " + produto.getNome());
+            System.out.println("Quantidade: " + produto.getQuantidade());
+            System.out.println("Valor Unitário: R$" + produto.getValorUnitario());
+            System.out.println("-----------------------------------");
         }
-        System.out.println("Total: R$" + total);
+        System.out.print("Valor total do carrinho: " + carrinho.getValorTotal() + "\n");
     }
 
     public void removerProduto(Carrinho carrinho, Produto produtoApagar) {

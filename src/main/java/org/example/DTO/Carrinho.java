@@ -9,7 +9,7 @@ import java.util.List;
 public class Carrinho {
 
     private Integer id;
-    private double valorTotal;
+    private BigDecimal valorTotal;
     private List<Produto> produtos;
     private Frete frete;
     private Desconto desconto;
