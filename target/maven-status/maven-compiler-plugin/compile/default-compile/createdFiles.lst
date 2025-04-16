@@ -1,1 +1,15 @@
 org/example/Main.class
+org/example/Service/DescontoService.class
+org/example/DTO/Carrinho.class
+org/example/Service/ValidacaoService.class
+org/example/DTO/DescontoTest.class
+org/example/DTO/Desconto.class
+org/example/Service/CarrinhoService.class
+org/example/DTO/Estado.class
+org/example/DTO/Validacao.class
+org/example/DTO/Produto.class
+org/example/enumeration/ERegra.class
+org/example/enumeration/ETipoFrete.class
+org/example/DTO/Frete.class
+org/example/Service/FreteService.class
+org/example/Service/ProdutoService.class

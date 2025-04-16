@@ -2,7 +2,6 @@ package org.example.Service;
 import org.example.DTO.Estado;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class FreteService {
     public Integer calcularFrete(String siglaEstado) {

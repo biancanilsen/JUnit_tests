@@ -1,1 +1,15 @@
-/paytrack/git/backend/trabalho-junit/JUnit_tests/src/main/java/org/example/Main.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/DTO/Carrinho.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/DTO/Desconto.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/DTO/DescontoTest.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/DTO/Estado.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/DTO/Frete.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/DTO/Produto.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/DTO/Validacao.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/Main.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/Service/CarrinhoService.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/Service/DescontoService.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/Service/FreteService.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/Service/ProdutoService.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/Service/ValidacaoService.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/enumeration/ERegra.java
+/paytrack/git/backend/trabalho-junit/src/main/java/org/example/enumeration/ETipoFrete.java
