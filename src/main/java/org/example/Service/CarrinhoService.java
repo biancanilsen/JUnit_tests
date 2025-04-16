@@ -1,9 +1,7 @@
 package org.example.Service;
 
-import org.example.DTO.Carrinho;
-import org.example.DTO.Frete;
-import org.example.DTO.Produto;
-import org.example.DTO.Validacao;
+import org.example.DTO.*;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -66,8 +64,8 @@ public class CarrinhoService {
 
         }
 
-       exibirCarrinho(carrinho);
-
+        exibirCarrinho(carrinho);
+        finalizarCompraComDesconto(carrinho);
     }
 
     public void adicionarProduto(Carrinho carrinho, Integer idProduto) {
@@ -110,4 +108,22 @@ public class CarrinhoService {
         }
         System.out.println(produtoApagar.getNome() + " não está no carrinho.");
     }
+
+    public void finalizarCompraComDesconto(Carrinho carrinho) {
+        // Mostra total atual
+        System.out.println("Total sem desconto: R$" + carrinho.getValorTotal());
+
+        // Aplica desconto com base no cupom
+        Desconto desconto = descontoService.aplicarDescontoPorCupom(carrinho.getValorTotal());
+        carrinho.setValorTotal(desconto.getValor());
+
+        // Exibe total final com desconto e frete
+        BigDecimal totalComFrete = carrinho.getValorTotal().add(
+                carrinho.getFrete() != null ? carrinho.getFrete().getValor() : BigDecimal.ZERO
+        );
+
+        System.out.println("Compra finalizada com desconto. Total com frete: R$" + totalComFrete.setScale(2));
+    }
+
+
 }
