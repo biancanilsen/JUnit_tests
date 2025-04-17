@@ -29,8 +29,8 @@ public class FreteServiceTest {
         // Arrange
         String siglaEstado = "SP";
         List<Estado> estados = Arrays.asList(
-                new Estado(1, "SP", "Brasil", 30),
-                new Estado(2, "RJ", "Brasil", 36)
+                new Estado(Integer.valueOf(1), "SP", "Brasil", 30),
+                new Estado(Integer.valueOf(2), "RJ", "Brasil", 36)
         );
 
         try (MockedStatic<Estado> estadoMockedStatic = Mockito.mockStatic(Estado.class)) {
@@ -46,8 +46,8 @@ public class FreteServiceTest {
     void calcularFrete_EstadoExistenteCaseDiferente_RetornaValorCorreto() {
         String siglaEstado = "sp"; // minúsculo
         List<Estado> estados = Arrays.asList(
-                new Estado(1, "SP", "Brasil", 30),
-                new Estado(2, "RJ", "Brasil", 36)
+                new Estado(Integer.valueOf(1), "SP", "Brasil", 30),
+                new Estado(Integer.valueOf(2), "RJ", "Brasil", 36)
         );
 
         try (MockedStatic<Estado> estadoMockedStatic = Mockito.mockStatic(Estado.class)) {
@@ -63,8 +63,8 @@ public class FreteServiceTest {
     void calcularFrete_EstadoInexistente_RetornaZero() {
         String siglaEstado = "ZZ"; // Estado que não existe
         List<Estado> estados = Arrays.asList(
-                new Estado(1, "SP", "Brasil", 30),
-                new Estado(2, "RJ", "Brasil", 36)
+                new Estado(Integer.valueOf(1), "SP", "Brasil", 30),
+                new Estado(Integer.valueOf(2), "RJ", "Brasil", 36)
         );
 
         try (MockedStatic<Estado> estadoMockedStatic = Mockito.mockStatic(Estado.class)) {
@@ -94,8 +94,8 @@ public class FreteServiceTest {
     void calcularFrete_EstadoComValorDecimal_TruncaParaInteiro() {
         String siglaEstado = "MG";
         List<Estado> estados = Arrays.asList(
-                new Estado(1, "SP", "Brasil", 30),
-                new Estado(2, "MG", "Brasil", 42.75) // valor com decimal
+                new Estado(Integer.valueOf(1), "SP", "Brasil", 30),
+                new Estado(Integer.valueOf(2), "MG", "Brasil", 42.75) // valor com decimal
         );
 
         try (MockedStatic<Estado> estadoMockedStatic = Mockito.mockStatic(Estado.class)) {

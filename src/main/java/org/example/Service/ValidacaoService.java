@@ -14,13 +14,13 @@ public class ValidacaoService {
     public Validacao validarProduto(Integer idProduto, String siglaEstado) {
         boolean produtoExiste = validarSeProdutoExiste(idProduto);
         if(!produtoExiste) {
-            return new Validacao(1, ERegra.PRODUTO_INEXISTENTE, "O produto selecionado não existe");
+            return new Validacao(Integer.valueOf(1), ERegra.PRODUTO_INEXISTENTE, "O produto selecionado não existe");
         }
 
         boolean temDisponibilidadeEstado = validarDisponibilidadeEstado(siglaEstado, idProduto);
         if(!temDisponibilidadeEstado) {
             String descricao = "O produto selecionado não está disponível no estado selecionado \n";
-            return new Validacao(2, ERegra.INDISPONIBILIDADE_ESTADO, descricao);
+            return new Validacao(Integer.valueOf(2), ERegra.INDISPONIBILIDADE_ESTADO, descricao);
         }
 
         return null;
