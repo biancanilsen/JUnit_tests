@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -45,31 +44,23 @@ class ValidacaoServiceTest {
         );
     }
 
-    //Ajustar
-//    @Test
-//    void validarProduto_DeveRetornarNull_QuandoProdutoExisteEDisponivelNoEstado() {
-//        // Arrange
-//        when(produtoService.buscarTodosProdutos())
-//                .thenReturn(Collections.singletonList(produtoValido));
-//
-//        // Act
-//        Validacao resultado = validacaoService.validarProduto(1, "SP");
-//
-//        // Assert
-//        assertNull(resultado);
-//        verify(produtoService, times(1)).buscarTodosProdutos();
-//    }
+    @Test
+    void validarProduto_DeveRetornarNull_QuandoProdutoExisteEDisponivelNoEstado() {
+        when(produtoService.buscarTodosProdutos())
+                .thenReturn(Collections.singletonList(produtoValido));
+
+        Validacao resultado = validacaoService.validarProduto(1, "SC");
+
+        assertNull(resultado);
+    }
 
     @Test
     void validarProduto_DeveRetornarValidacao_QuandoProdutoNaoExiste() {
-        // Arrange
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.emptyList());
 
-        // Act
         Validacao resultado = validacaoService.validarProduto(999, "SP");
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(1, resultado.getId());
         assertEquals(ERegra.PRODUTO_INEXISTENTE, resultado.getRegra());
@@ -77,34 +68,26 @@ class ValidacaoServiceTest {
         verify(produtoService, times(1)).buscarTodosProdutos();
     }
 
-    //Ajustar
-//    @Test
-//    void validarProduto_DeveRetornarValidacao_QuandoProdutoNaoDisponivelNoEstado() {
-//        // Arrange
-//        when(produtoService.buscarTodosProdutos())
-//                .thenReturn(Collections.singletonList(produtoValido));
-//
-//        // Act
-//        Validacao resultado = validacaoService.validarProduto(1, "MG");
-//
-//        // Assert
-//        assertNotNull(resultado);
-//        assertEquals(2, resultado.getId());
-//        assertEquals(ERegra.INDISPONIBILIDADE_ESTADO, resultado.getRegra());
-//        assertTrue(resultado.getDescricao().contains("O produto selecionado não está disponível no estado selecionado"));
-//        verify(produtoService, times(1)).buscarTodosProdutos();
-//    }
-
     @Test
-    void validarSeProdutoExiste_DeveRetornarTrue_QuandoProdutoExiste() {
-        // Arrange
+    void validarProduto_DeveRetornarValidacao_QuandoProdutoNaoDisponivelNoEstado() {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        // Act
+        Validacao resultado = validacaoService.validarProduto(1, "MG");
+
+        assertNotNull(resultado);
+        assertEquals(2, resultado.getId());
+        assertEquals(ERegra.INDISPONIBILIDADE_ESTADO, resultado.getRegra());
+        assertTrue(resultado.getDescricao().contains("O produto selecionado não está disponível no estado selecionado"));
+    }
+
+    @Test
+    void validarSeProdutoExiste_DeveRetornarTrue_QuandoProdutoExiste() {
+        when(produtoService.buscarTodosProdutos())
+                .thenReturn(Collections.singletonList(produtoValido));
+
         boolean resultado = validacaoService.validarSeProdutoExiste(1);
 
-        // Assert
         assertTrue(resultado);
         verify(produtoService, times(1)).buscarTodosProdutos();
     }
@@ -123,46 +106,35 @@ class ValidacaoServiceTest {
         verify(produtoService, times(1)).buscarTodosProdutos();
     }
 
-    // ajustar
-
-//    @Test
-//    void validarDisponibilidadeEstado_DeveRetornarTrue_QuandoProdutoDisponivelNoEstado() {
-//        // Arrange
-//        when(produtoService.buscarTodosProdutos())
-//                .thenReturn(Collections.singletonList(produtoValido));
-//
-//        // Act
-//        boolean resultado = validacaoService.validarDisponibilidadeEstado("SP", 1);
-//
-//        // Assert
-//        assertTrue(resultado);
-//        verify(produtoService, times(1)).buscarTodosProdutos();
-//    }
-
     @Test
-    void validarDisponibilidadeEstado_DeveRetornarFalse_QuandoProdutoNaoDisponivelNoEstado() {
-        // Arrange
+    void validarDisponibilidadeEstado_DeveRetornarTrue_QuandoProdutoDisponivelNoEstado() {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        // Act
+        boolean resultado = validacaoService.validarDisponibilidadeEstado("SC", 1);
+
+        assertTrue(resultado);
+        verify(produtoService, times(1)).buscarTodosProdutos();
+    }
+
+    @Test
+    void validarDisponibilidadeEstado_DeveRetornarFalse_QuandoProdutoNaoDisponivelNoEstado() {
+        when(produtoService.buscarTodosProdutos())
+                .thenReturn(Collections.singletonList(produtoValido));
+
         boolean resultado = validacaoService.validarDisponibilidadeEstado("MG", 1);
 
-        // Assert
         assertFalse(resultado);
         verify(produtoService, times(1)).buscarTodosProdutos();
     }
 
     @Test
     void validarDisponibilidadeEstado_DeveRetornarFalse_QuandoProdutoNaoExiste() {
-        // Arrange
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        // Act
         boolean resultado = validacaoService.validarDisponibilidadeEstado("SP", 999);
 
-        // Assert
         assertFalse(resultado);
         verify(produtoService, times(1)).buscarTodosProdutos();
     }
