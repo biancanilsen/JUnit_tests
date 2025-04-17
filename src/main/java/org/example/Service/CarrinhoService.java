@@ -22,11 +22,11 @@ public class CarrinhoService {
 
         produtoService.listarProdutosDisponiveis();
         System.out.print("Digite a sigla do estado a ser enviado: ");
-        String siglaEstado = scanner.nextLine();
+        String siglaEstado = scanner.nextLine();;
 
         while(adicionarMaisProdutos == 1) {
             System.out.print("Digite o id do produto desejado para adicionar no carrinho: ");
-            Integer idProdutoNovo = scanner.nextInt();
+            Integer idProdutoNovo = Integer.valueOf(scanner.nextLine());
 
             Validacao validacao = validacaoService.validarProduto(idProdutoNovo, siglaEstado);
 

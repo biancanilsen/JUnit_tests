@@ -32,13 +32,13 @@ class ValidacaoServiceTest {
 
     @BeforeEach
     void setUp() {
-        estadoSP = new Estado(24, "SC", "Brasil", 34);
-        estadoRJ = new Estado(19, "RJ", "Brasil", 36);
+        estadoSP = new Estado(Integer.valueOf(24), "SC", "Brasil", 34);
+        estadoRJ = new Estado(Integer.valueOf(19), "RJ", "Brasil", 36);
 
         produtoValido = new Produto(
-                1,
+                Integer.valueOf(1),
                 "Produto Teste",
-                10,
+                Integer.valueOf(10),
                 100.0,
                 Arrays.asList(estadoSP, estadoRJ)
         );
@@ -49,7 +49,7 @@ class ValidacaoServiceTest {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        Validacao resultado = validacaoService.validarProduto(1, "SC");
+        Validacao resultado = validacaoService.validarProduto(Integer.valueOf(1), "SC");
 
         assertNull(resultado);
     }
@@ -59,7 +59,7 @@ class ValidacaoServiceTest {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.emptyList());
 
-        Validacao resultado = validacaoService.validarProduto(999, "SP");
+        Validacao resultado = validacaoService.validarProduto(Integer.valueOf(999), "SP");
 
         assertNotNull(resultado);
         assertEquals(1, resultado.getId());
@@ -73,7 +73,7 @@ class ValidacaoServiceTest {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        Validacao resultado = validacaoService.validarProduto(1, "MG");
+        Validacao resultado = validacaoService.validarProduto(Integer.valueOf(1), "MG");
 
         assertNotNull(resultado);
         assertEquals(2, resultado.getId());
@@ -86,7 +86,7 @@ class ValidacaoServiceTest {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        boolean resultado = validacaoService.validarSeProdutoExiste(1);
+        boolean resultado = validacaoService.validarSeProdutoExiste(Integer.valueOf(1));
 
         assertTrue(resultado);
         verify(produtoService, times(1)).buscarTodosProdutos();
@@ -99,7 +99,7 @@ class ValidacaoServiceTest {
                 .thenReturn(Collections.singletonList(produtoValido));
 
         // Act
-        boolean resultado = validacaoService.validarSeProdutoExiste(999);
+        boolean resultado = validacaoService.validarSeProdutoExiste(Integer.valueOf(999));
 
         // Assert
         assertFalse(resultado);
@@ -111,7 +111,7 @@ class ValidacaoServiceTest {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        boolean resultado = validacaoService.validarDisponibilidadeEstado("SC", 1);
+        boolean resultado = validacaoService.validarDisponibilidadeEstado("SC", Integer.valueOf(1));
 
         assertTrue(resultado);
         verify(produtoService, times(1)).buscarTodosProdutos();
@@ -122,7 +122,7 @@ class ValidacaoServiceTest {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        boolean resultado = validacaoService.validarDisponibilidadeEstado("MG", 1);
+        boolean resultado = validacaoService.validarDisponibilidadeEstado("MG", Integer.valueOf(1));
 
         assertFalse(resultado);
         verify(produtoService, times(1)).buscarTodosProdutos();
@@ -133,7 +133,7 @@ class ValidacaoServiceTest {
         when(produtoService.buscarTodosProdutos())
                 .thenReturn(Collections.singletonList(produtoValido));
 
-        boolean resultado = validacaoService.validarDisponibilidadeEstado("SP", 999);
+        boolean resultado = validacaoService.validarDisponibilidadeEstado("SP", Integer.valueOf(999));
 
         assertFalse(resultado);
         verify(produtoService, times(1)).buscarTodosProdutos();
