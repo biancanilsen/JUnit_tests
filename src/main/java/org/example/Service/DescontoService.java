@@ -44,7 +44,12 @@ public class DescontoService {
 
 
     public Desconto calcularDescontoPorcentagem(BigDecimal valorProduto, BigDecimal percentualDesconto) {
-        BigDecimal desconto = valorProduto.multiply(percentualDesconto).divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+        if (valorProduto == null || percentualDesconto == null) {
+            throw new IllegalArgumentException("valorProduto e percentualDesconto não podem ser nulos.");
+        }
+
+        BigDecimal desconto = valorProduto.multiply(percentualDesconto)
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
         BigDecimal valorComDesconto = valorProduto.subtract(desconto);
         return new Desconto(valorComDesconto);
     }
