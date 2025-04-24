@@ -26,7 +26,7 @@ public class CarrinhoService {
 
         while(adicionarMaisProdutos == 1) {
             System.out.print("Digite o id do produto desejado para adicionar no carrinho: ");
-            Integer idProdutoNovo = Integer.valueOf(scanner.nextLine());
+            Integer idProdutoNovo = Integer.valueOf(scanner.nextInt());
 
             Validacao validacao = validacaoService.validarProduto(idProdutoNovo, siglaEstado);
 
